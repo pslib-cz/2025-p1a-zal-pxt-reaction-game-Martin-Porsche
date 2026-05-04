@@ -5,7 +5,6 @@ let pressedA = input.buttonIsPressed(Button.A)
 let pressedB = input.buttonIsPressed(Button.B)
 let pressedBoth = input.buttonIsPressed(Button.AB)
 let runningIner:boolean = false;
-let pool:number = 0;
 
 
 function showHodiny() {
@@ -40,7 +39,25 @@ basic.forever(function () {
         showHodiny()
         control.runInBackground(() => music.playTone(440, 200))
         wait()
-        stav = "running"
+        let pressedA = input.buttonIsPressed(Button.A)
+        let pressedB = input.buttonIsPressed(Button.B)
+        if(pressedA === true){
+            basic.showString("B")
+            control.runInBackground(() => music.playTone(100, 200))
+            stav = "passive"
+        }else if(pressedB === true){
+            basic.showString("A")
+            control.runInBackground(() => music.playTone(100, 200))
+            stav = "passive"
+        } else if (input.buttonIsPressed(Button.AB) === true){
+            basic.showIcon(IconNames.Sad)
+            control.runInBackground(() => music.playTone(200, 200))
+            stav = "passive"
+        }
+        if(stav !== "passive"){
+            stav = "running"
+        }
+        
 
     } else if (stav === "running") {
         basic.showIcon(IconNames.Pitchfork)
