@@ -78,7 +78,7 @@ basic.forever(function () {
                 control.runInBackground(() => music.playTone(900, 200))
                 stav = "passive"
 
-            } else if (input.buttonIsPressed(Button.B) === true){
+            } else if (input.buttonIsPressed(Button.AB) === true){
                 basic.showIcon(IconNames.Square)
                 control.runInBackground(() => music.playTone(500, 200)) 
                 stav = "passive"
