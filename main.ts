@@ -4,9 +4,17 @@ let stav: string = "passive"
 let pressedA = input.buttonIsPressed(Button.A)
 let pressedB = input.buttonIsPressed(Button.B)
 let pressedBoth = input.buttonIsPressed(Button.AB)
+let runningIner:boolean = false;
+let pool:number = 0;
 
 
 function showHodiny() {
+    for (let i = 0; i < 5; i++) {
+        led.unplot(3, i)
+        led.unplot(1, i)
+        led.unplot(0, i)
+    }
+    
     for (let i = 0; i < 5; i++) {
         led.plot(i, 0)
         led.plot(i, 4)
@@ -32,30 +40,36 @@ basic.forever(function () {
         showHodiny()
         control.runInBackground(() => music.playTone(440, 200))
         wait()
-
+        stav = "running"
 
     } else if (stav === "running") {
         basic.showIcon(IconNames.Pitchfork)
-        control.runInBackground(() => music.playTone(600, 200))
-        let pressedA = input.buttonIsPressed(Button.A)
-        let pressedB = input.buttonIsPressed(Button.B)
+        control.runInBackground(() => music.playTone(600, 50))
+        runningIner = true;
+        if(runningIner === true){
+            
+            let pressedA = input.buttonIsPressed(Button.A)
+            let pressedB = input.buttonIsPressed(Button.B)
 
-        if(pressedA === true){
-            basic.showString("A");
-            control.runInBackground(() => music.playTone(800, 200))
-            stav = "passive"
+            if(pressedA === true){
+                basic.showString("A");
+                control.runInBackground(() => music.playTone(800, 200))
+                stav = "passive"
 
-        }else if(pressedB === true){
-            basic.showString("B");
-            control.runInBackground(() => music.playTone(900, 200))
-            stav = "passive"
+            }else if(pressedB === true){
+                basic.showString("B");
+                control.runInBackground(() => music.playTone(900, 200))
+                stav = "passive"
 
-        } else if (input.buttonIsPressed(Button.B) === true){
-            basic.showIcon(IconNames.Square)
-            control.runInBackground(() => music.playTone(500, 200)) 
-            stav = "passive"
+            } else if (input.buttonIsPressed(Button.B) === true){
+                basic.showIcon(IconNames.Square)
+                control.runInBackground(() => music.playTone(500, 200)) 
+                stav = "passive"
 
+            }
+            basic.pause(20)
         }
+        
     }
 
 })
